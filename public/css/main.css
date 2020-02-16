@@ -153,6 +153,11 @@ form {
 .card__content {
   padding: 1rem;
 }
+.card__imageBg{
+  min-height: 350px;
+  background-position: center;
+  background-size: cover;
+}
 
 .card__header h1,
 .card__content h1,
