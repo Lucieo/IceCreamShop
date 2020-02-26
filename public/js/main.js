@@ -14,3 +14,8 @@ function menuToggleClickHandler() {
 
 backdrop.addEventListener('click', backdropClickHandler);
 menuToggle.addEventListener('click', menuToggleClickHandler);
+
+function updatePrice(productPrice, productNumber){
+  const finalPrice = productPrice*productNumber;
+  document.querySelector('#product-price').innerHTML = finalPrice;
+}

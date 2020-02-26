@@ -1,11 +1,14 @@
 <div class="backdrop"></div>
 <header class="main-header">
-    <button id="side-menu-toggle">Menu</button>
+    <a href="/" class="main-header__logo">
+        <img src="/images/logo-white.png" alt="" class="main-header__logo">
+        <span>TICS</span>
+    </a>
+    <button id="side-menu-toggle">
+        <img src="/images/open-menu.png" alt="">
+    </button>
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
-            <li class="main-header__item">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
-            </li>
             <li class="main-header__item">
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
             </li>
@@ -48,6 +51,10 @@
 </header>
 
 <nav class="mobile-nav">
+    <div class="mobile-nav__logo-wrapper">
+        <img src="/images/logo-color.png" alt="" class="main-header__logo">
+        <p class="mobile-nav__logo-text">The Ice Cream Shop</p>
+    </div>
     <ul class="mobile-nav__item-list">
         <li class="mobile-nav__item">
             <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>

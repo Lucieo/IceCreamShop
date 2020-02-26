@@ -1,17 +1,41 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/product.css">
-</head>
+    <link rel="stylesheet" href="/css/product-detail.css"></head>
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-<main class='centered'>
-    <h1>PRODUCT DETAIL PAGE</h1>
-    <hr>
-    <div class="image">
-        <img src=/"<%= product.imageUrl %>" alt="<%= product.title %>">
+<div class="product-detail__wrapper">
+    <div 
+    class="product-detail__img-bg"
+    style="background-image:url('/<%= product.imageUrl %>');"
+    >
     </div>
-    <h2>$<%= product.price %></h2>
-    <p><%= product.description %></p>
-    <%- include('../includes/add-to-cart.ejs') %>
-</main>
+    <div class="product-detail__product-info">
+        <div class="product-info__wrapper">
+            <div class="product-info__image centered">
+                <img src='/<%= product.productImageUrl %>' alt="">
+            </div>
+            <div class="product-info__actions">
+                <h2><%= product.title %></h2>
+                <p><%= product.description %></p>
+                <hr class="product-info__separator">
+                <div class="product-info__detail-wrapper">
+                    <p>Container capacity</p>
+                    <p><%= product.container %></p>
+                </div>
+                <hr class="product-info__separator">
+                <div class="product-info__detail-wrapper">
+                    <%- include('../includes/add-to-cart.ejs') %> 
+                </div>
+            </div>
+        </div>
+        <div class="centered">
+            <h3 class="no-margin">Nothing To hide!</h3>
+            <p class="no-margin">Discover the complete list of our ingredients</p>
+            <img class="product-detail__ingredient-icon" src="/images/cooking-color.png" alt="ingredients icon">
+            <p class="product-detail__ingredients"><%= product.ingredients %></p>
+        </div>
+    </div>
+
+</div>
 <%- include('../includes/end.ejs') %>

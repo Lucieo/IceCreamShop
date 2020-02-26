@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/admin-product-list.css">
 </head>
 
 <body>
@@ -7,34 +7,53 @@
 
     <main>
         <% if (prods.length > 0) { %>
-            <div class="grid">
+            <div class="admin-products">
+                <p>Find below all products you have created so far, edit, delete them or create new ones :</p>
+                <ul>
+                    <li>All new product will be reviewed by superAdmin before publication</li>
+                    <li>Maximum of 5 products created is allowed for each admin account</li>
+                </ul>
                 <% for (let product of prods) { %>
-                    <article class="card product-item">
-                        <header class="card__header">
-                            <h1 class="product__title"><%= product.title %></h1>
-                        </header>
-                        <div class="card__image">
-                            <img src="/<%= product.imageUrl %>"
-                                alt="<%= product.title %>">
+                    <div class="admin-products__items">
+                        <div class="admin-products__image">
+                            <img src="/<%=product.productImageUrl%>" alt="product image">
                         </div>
-                        <div class="card__content">
-                            <h2 class="product__price">$<%= product.price %></h2>
-                            <p class="product__description"><%= product.description %></p>
+                        <div class="admin-products__title">
+                            <p><%= product.title %></p>
                         </div>
-                        <div class="card__actions">
-                            <a href="/admin/edit-product/<%= product._id%>?edit=true" class='btn'>Edit</a>
-                            <input type="hidden" value="<%= product._id %>" name="productId">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button type='button' 
-                            onClick="deleteProduct(this)"
-                            class='btn'>Delete</button>
+                        <div class="admin-products__price">
+                            <p><%= product.price %> $</p>
                         </div>
-                    </article>
+                        <div class="admin-products__status centered">
+                            <%if(product.validated){%>
+                                <p>validated</p>
+                            <%} else{%>
+                                <p>waiting for approval</p>
+                            <%}%>
+                        </div>
+                        <div class="admin-products__actions">
+                            <a 
+                            href="/admin/edit-product/<%= product._id%>?edit=true"
+                            class="admin-products__edit-icon">
+                                <img src="/images/edit-icon.png" alt="edit icon"
+                                >
+                            </a>
+                            <img src="/images/delete.png" alt="delete" onClick="deleteProduct(this)"
+                            class="admin-products__delete-icon"
+                            >
+                        </div>
+                    </div>
+
                 <% } %>
             </div>
         <% } else { %>
-            <h1>No Products Found!</h1>
+            <h1>You created no products yet!</h1>
         <% } %>
+        <div class="centered add-product__wrapper">
+            <a href="/admin/add-product">
+                <button class="btn">Add a product</button>
+            </a>
+        </div>
     </main>
 <%- include('../includes/end.ejs') %>
 <script src="/js/admin.js"></script>

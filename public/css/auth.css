@@ -4,3 +4,35 @@
     margin: auto;
     display: block;
 }
+
+.sign-up__wrapper, .login__wrapper, .new-password__wrapper{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.sign-up__additional-info, .sign-in__additional-info{
+    font-style: italic;
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.sign-up__btn{
+    margin-top:30px
+}
+
+.sign-up__warning{
+    border: 1px solid gray;
+    padding: 25px;
+}
+
+.sign-in__reset-password {
+    padding:20px;
+}
+
+.sign-in__reset-password a{
+    text-decoration: none;
+}
+
+.sign-in__additional-info{
+    margin: 0;
+}

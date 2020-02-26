@@ -12,7 +12,7 @@ exports.getIndex=(req,res,next)=>{
   let totalItems;
 
   Product
-  .find()
+  .find({validated:true})
   .countDocuments()
   .then(numProducts=>{
     totalItems = numProducts;
@@ -93,6 +93,7 @@ exports.getCart = (req, res, next)=>{
   .populate('cart.items.productId')
   .execPopulate()
   .then(user=>{
+    console.log(user.cart.items)
     res.render('shop/cart', {
       products:user.cart.items,
       pageTitle: 'Cart',
@@ -103,9 +104,10 @@ exports.getCart = (req, res, next)=>{
 
 exports.postCart = (req, res, next)=>{
   const prodId = req.body.productId;
+  const quantity = +req.body.quantity || 1;
   Product.findById(prodId)
   .then(product=>{
-    return req.user.addToCart(product);
+    return req.user.addToCart(product, quantity);
   })
   .then(result=>{
     res.redirect('/cart');

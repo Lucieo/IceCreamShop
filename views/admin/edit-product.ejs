@@ -25,28 +25,51 @@
                 id="title" 
                 value="<% if(editing || hasError){%> <%=product.title%> <%}%>">
             </div>
-            <!--
+
             <div class="form-control">
-                <label for="imageUrl">ImageUrl</label>
-                <input 
-                    class="<%= validationErrors.find(error=> error.param==='imageUrl') ? 'invalid' : ''%>"
-                    type="text" 
-                    name="imageUrl" 
-                    id="imageUrl" 
-                    value="<% if(editing  || hasError){%> <%=product.imageUrl%> <%}%>">
-            </div>
-            -->
-            <div class="form-control">
-                <label for="image">Image</label>
+                <label for="image">Product Illustration</label>
                 <input 
                     type="file" 
                     name="image" 
                     id="image" 
                 />
+                <% if(editing){%>
+                    <img src="/<%=product.imageUrl%>" alt="product image" style="max-width: 150px;">
+                <%}%>
             </div>
 
             <div class="form-control">
-                <label for="price">Price</label>
+                <label for="productImage">Product Picture</label>
+                <input 
+                    type="file" 
+                    name="productImage" 
+                    id="productImage" 
+                />
+                <% if(editing){%>
+                    <img src="/<%=product.productImageUrl%>" alt="product image" style="max-width: 150px;">
+                <%}%>
+            </div>
+
+            <div class="form-control">
+                <label for="container">Product Container</label>
+                <select
+                class="<%= validationErrors.find(error=> error.param==='container') ? 'invalid' : ''%>" 
+                name="container" 
+                id="container" 
+                >
+                <%
+                    var options = ["500ml","1L"];
+                    for ( var i = 0; i < options.length; i++ )
+                    {
+
+                        %><option value="<%=options[ i ] %>"><%=options[i] %></option><%
+                    }
+                %>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <label for="price">Product Price</label>
                 <input 
                     class="<%= validationErrors.find(error=> error.param==='price') ? 'invalid' : ''%>"
                     type="number" 
@@ -62,6 +85,14 @@
                     name="description" 
                     id="description" 
                 ><% if(editing || hasError){%> <%=product.description%> <%}%></textarea>
+            </div>
+            <div class="form-control">
+                <label for="ingredients">Ingredients</label>
+                <textarea 
+                    class="<%= validationErrors.find(error=> error.param==='description') ? 'invalid' : ''%>"
+                    name="ingredients" 
+                    id="ingredients" 
+                ><% if(editing || hasError){%> <%=product.ingredients%> <%}%></textarea>
             </div>
             <% if (editing){%> 
                 <input type="hidden" value="<%= product._id %>" name="productId">

@@ -7,38 +7,50 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% if(errorMessage){%>
-            <div class="user-message user-message--error"><%=errorMessage%></div>
-        <%}%>
-        <form class="login-form" action="/signup" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <div class="form-control">
-                <label for="email">E-Mail</label>
-                <input 
-                class="<%= validationErrors.find(error=> error.param==='email') ? 'invalid' : ''%>"
-                type="email" 
-                name="email" 
-                id="email" 
-                value="<%=oldInput.email%>">
-            </div>
-            <div class="form-control">
-                <label for="password">Password</label>
-                <input 
-                class="<%= validationErrors.find(error=> error.param==='password') ? 'invalid' : ''%>"
-                type="password" 
-                name="password" 
-                id="password" 
-                value="<%=oldInput.password%>">
-            </div>
-            <div class="form-control">
-                <label for="confirmPassword">Confirm Password</label>
-                <input 
-                class="<%= validationErrors.find(error=> error.param==='confirmPassword') ? 'invalid' : ''%>"
-                type="password" 
-                name="confirmPassword" id="confirmPassword"
-                value="<%=oldInput.confirmPassword%>">
-            </div>
-            <button class="btn" type="submit">SignUp</button>
-        </form>
+        <div class="sign-up__wrapper">
+            <% if(errorMessage){%>
+                <div class="user-message user-message--error"><%=errorMessage%></div>
+            <%}%>
+            <p class="centered bold">
+                PLEASE NOTE THAT THIS IS A FAKE SHOP
+            </p>
+            <p class="centered sign-up__warning">All content on this website was created as an exercise to master Node.js EJS Express and MongoDb skills. All products and payment processes are fake and won't lead to any delivery. For any inquiries on my work please contact me on my  <a href="https://www.linkedin.com/in/lucie-ory-4aa50038/">linkedin account</a></p>
+            <form class="login-form" action="/signup" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="form-control">
+                    <label for="email">E-Mail</label>
+                    <input 
+                    class="<%= validationErrors.find(error=> error.param==='email') ? 'invalid' : ''%>"
+                    type="email" 
+                    name="email" 
+                    id="email" 
+                    value="<%=oldInput.email%>">
+                </div>
+                <div class="form-control">
+                    <label for="password">Password</label>
+                    <input 
+                    class="<%= validationErrors.find(error=> error.param==='password') ? 'invalid' : ''%>"
+                    type="password" 
+                    name="password" 
+                    id="password" 
+                    value="<%=oldInput.password%>">
+                </div>
+                <div class="form-control">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input 
+                    class="<%= validationErrors.find(error=> error.param==='confirmPassword') ? 'invalid' : ''%>"
+                    type="password" 
+                    name="confirmPassword" id="confirmPassword"
+                    value="<%=oldInput.confirmPassword%>">
+                </div>
+                <div>
+                    <input type="checkbox" id="requireAdmin" name="requireAdmin">
+                    <label for="requireAdmin">Please grant me admin access <span class="sign-up__additional-info">(for recruiters who'd like to see the admin part. A request by email will be automatically issued to superAdmin. Please note that access will only be granted after prior contact through linkedin.)</span></label>
+                  </div>
+                <div class="centered">
+                    <button class="btn sign-up__btn" type="submit">SignUp</button>
+                </div>
+            </form>
+        </div>
     </main>
 <%- include('../includes/end.ejs') %>

@@ -1,7 +1,18 @@
 <% if(isLoggedIn){ %>
-    <form action="/cart" method='POST'>
-        <button class='btn' type='submit'>Add to Cart</button>
-        <input type="hidden" name='productId' value="<%= product._id %>">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    </form>
-<% } %>
+    <div class="product-selector">
+        <div>
+            <p><span id="product-price"><%= product.price %></span>$</p>
+        </div>
+        <form action="/cart" method='POST'>
+            <input id="quantity-selector" type="number" name="quantity" value="1" onclick="updatePrice(<%= product.price %>, this.value)" max=10 min=1>
+            <button class='btn' type='submit'>Add to Cart</button>
+            <input type="hidden" name='productId' value="<%= product._id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+    </div>
+<% } else{%>
+    <a href="/login">
+        <button class='btn'>Login to buy</button>
+    </a>
+<%}%>
+

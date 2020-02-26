@@ -19,9 +19,25 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
+  productImageUrl: {
+    type: String,
+    required: true
+  },
   userId :{
     type : Schema.Types.ObjectId,
     ref: 'User'
+  },
+  container:{
+    type:String,
+    required: true
+  },
+  ingredients:{
+    type:String,
+    required: true
+  },
+  validated:{
+    type:Boolean,
+    default:false
   }
 });
 

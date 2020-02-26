@@ -39,11 +39,17 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const image = req.file;
+  const image = req.files.image[0];
+  const productImage = req.files.productImage[0];
   const description = req.body.description;
   const price = req.body.price;
   const userId = req.user;//mongoose will look for id only
+  const container = req.body.container;
+  const ingredients = req.body.ingredients;
   const errors = validationResult(req);
+
+  const imageUrl = image.path;
+  const productImageUrl = productImage.path;
 
   if(!errors.isEmpty()){
     return res
@@ -56,7 +62,9 @@ exports.postAddProduct = (req, res, next) => {
       product: {
         title,
         price,
-        description
+        description,
+        container,
+        ingredients
       },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
@@ -74,16 +82,16 @@ exports.postAddProduct = (req, res, next) => {
         title,
         imageUrl, 
         price,
-        description
+        description,
+        container,
+        ingredients
       },
       errorMessage: "Attached file is not an image (jpeg jpg or png accepted).",
       validationErrors: []
     });
   }
 
-  const imageUrl = image.path;
-
-  const product = new Product({title, price, description, imageUrl, userId});
+  const product = new Product({title, price, description, imageUrl, productImageUrl, userId, container, ingredients, });
   product
   .save()
   .then(result=>res.redirect('/admin/products'))
@@ -126,8 +134,17 @@ exports.postEditProduct = (req, res, next)=>{
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
-  const updatedImage = req.file;
   const updatedDescription = req.body.description;
+  const updatedContainer = req.body.container;
+  const updatedIngredients = req.body.ingredients;
+  let updatedImage=undefined;
+  let updatedProductImage=undefined;
+  if(req.files.image){
+    updatedImage = req.files.image[0];
+  }
+  if(req.files.productImage){
+    updatedProductImage = req.files.productImage[0];
+  }
 
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -142,6 +159,8 @@ exports.postEditProduct = (req, res, next)=>{
         title: updatedTitle,
         price: updatedPrice,
         description: updatedDescription,
+        ingredients: updatedDescription,
+        container: updatedContainer,
         _id: prodId
       },
       errorMessage: errors.array()[0].msg,
@@ -159,11 +178,17 @@ exports.postEditProduct = (req, res, next)=>{
     product.title = updatedTitle;
     product.price = updatedPrice;
     if(updatedImage){
-      //delete old image
       fileHelper.deleteFile(product.imageUrl);
-      product.imageUrl = image.path;
+      product.imageUrl = updatedImage.path;
+    }
+    if(updatedProductImage){
+      fileHelper.deleteFile(product.productImageUrl);
+      product.productImageUrl =updatedProductImage.path;
     }
     product.description = updatedDescription;
+    product.container = updatedContainer;
+    product.ingredients = updatedIngredients;
+    console.log(product)
     return product.save()  
     .then(result=>  res.redirect('/admin/products'));
   })

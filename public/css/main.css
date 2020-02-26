@@ -23,6 +23,14 @@ form {
   text-align: center;
 }
 
+.bold{
+  font-weight: bold;
+}
+
+.no-margin{
+  margin:0
+}
+
 .image {
   height: 20rem;
 }
@@ -34,8 +42,16 @@ form {
 .main-header {
   width: 100%;
   height: 3.5rem;
-  background-color: #00695c;
+  background-color: #C86144;
   padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-header__logo{
+  color:white;
+  text-decoration: none;
   display: flex;
   align-items: center;
 }
@@ -76,6 +92,10 @@ form {
 .main-header__item button:hover,
 .main-header__item button:active {
   color: #ffeb3b;
+}
+
+.main-header__logo{
+  max-height: 40px;
 }
 
 .mobile-nav {
@@ -126,19 +146,31 @@ form {
 .mobile-nav__item a.active,
 .mobile-nav__item button:hover,
 .mobile-nav__item button:active {
-  background: #00695c;
+  background: #C86144;
   color: white;
   border-radius: 3px;
 }
 
+.mobile-nav__logo-wrapper{
+  display: flex;
+  align-items: center;
+}
+.mobile-nav__logo-text{
+  color: #C86144;
+}
+
 #side-menu-toggle {
-  border: 1px solid white;
   font: inherit;
   padding: 0.5rem;
   display: block;
   background: transparent;
   color: white;
   cursor: pointer;
+  border:none;
+}
+
+#side-menu-toggle img{
+  padding-top:10px
 }
 
 #side-menu-toggle:focus {
@@ -208,8 +240,8 @@ form {
   padding: 0.25rem 1rem;
   text-decoration: none;
   font: inherit;
-  border: 1px solid #00695c;
-  color: #00695c;
+  border: 1px solid #C86144;
+  color: #C86144;
   background: white;
   border-radius: 3px;
   cursor: pointer;
@@ -217,7 +249,7 @@ form {
 
 .btn:hover,
 .btn:active {
-  background-color: #00695c;
+  background-color: #C86144;
   color: white;
 }
 
@@ -255,18 +287,17 @@ form {
 .pagination a{
   text-decoration: none;
   padding: 0.5rem;
-  color: #00695c;
-  border : 1px solid #00695c;
+  color: #C86144;
+  border : 1px solid #C86144;
   margin: 0 1rem;
 }
 
 .pagination a:hover,
 .pagination a:active,
 .pagination a.active{
-  background: #00695c;
+  background: #C86144;
   color:white;
 }
-
 
 @media (min-width: 768px) {
   .main-header__nav {
