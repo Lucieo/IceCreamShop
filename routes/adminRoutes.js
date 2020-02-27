@@ -24,7 +24,7 @@ router.post('/add-product', [
         .isLength({min: 5, max:400})
         .trim()
 ], isAdmin, hasReachedLimit, adminController.postAddProduct);
-router.get('/products', isAdmin, adminController.getAdminProducts)
+router.get('/products', adminController.getAdminProducts)
 
 router.get('/edit-product/:productId', adminController.getEditProduct);
 router.post('/edit-product', [
