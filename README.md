@@ -1,4 +1,4 @@
-# IceCreamShop :ice_cream:
+:shaved_ice: # IceCreamShop :ice_cream:
 
 A shop project developped with :
 - Node.js
