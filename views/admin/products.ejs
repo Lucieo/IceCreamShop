@@ -6,7 +6,13 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% if (prods.length > 0) { %>
+        <% if(!isAdmin) {%>
+            <div class="admin-denied">
+                <h1>Ice Cream Masters Only!</h1>
+                <p>To access this section and create new products you need admin access. If you are interested in my work please contact me on my <a href="https://www.linkedin.com/in/lucie-ory-4aa50038/">linkedin account</a>.</p>
+                <img src="/images/book.png" alt="cook book">
+            </div>
+        <%} else if (prods.length > 0) { %>
             <div class="admin-products">
                 <p>Find below all products you have created so far, edit, delete them or create new ones :</p>
                 <ul>
@@ -14,7 +20,7 @@
                     <li>Maximum of 5 products created is allowed for each admin account</li>
                 </ul>
                 <% for (let product of prods) { %>
-                    <div class="admin-products__items">
+                    <article class="admin-products__items">
                         <div class="admin-products__image">
                             <img src="/<%=product.productImageUrl%>" alt="product image">
                         </div>
@@ -38,22 +44,37 @@
                                 <img src="/images/edit-icon.png" alt="edit icon"
                                 >
                             </a>
-                            <img src="/images/delete.png" alt="delete" onClick="deleteProduct(this)"
+                            <input type="hidden" value="<%= product._id %>" name="productId">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <img src="/images/delete.png" alt="delete" onclick="deleteProduct(this)"
                             class="admin-products__delete-icon"
                             >
                         </div>
-                    </div>
+                    </article>
 
                 <% } %>
+                <%if(prods.length>=5 && !isSuperAdmin){%>
+                    <p class="centered">You have reached maximum products limit, please delete some to create a new one.</p>
+                <%} else{%>
+                    <div class="centered add-product__wrapper">
+                        <a href="/admin/add-product">
+                            <button class="btn">Add a new product</button>
+                        </a>
+                    </div>
+                <%}%>
             </div>
         <% } else { %>
-            <h1>You created no products yet!</h1>
+            <div class="centered">
+                <h2 class="centered">Nothing in there yet!</h2>
+                <p>Start creating products before your stock melts.</p>
+                <div class="centered add-product__wrapper">
+                    <a href="/admin/add-product">
+                        <button class="btn">Create your first product</button>
+                    </a>
+                </div>
+                <img src="/images/popsicle.png" alt="">
+            </div>
         <% } %>
-        <div class="centered add-product__wrapper">
-            <a href="/admin/add-product">
-                <button class="btn">Add a product</button>
-            </a>
-        </div>
     </main>
 <%- include('../includes/end.ejs') %>
 <script src="/js/admin.js"></script>

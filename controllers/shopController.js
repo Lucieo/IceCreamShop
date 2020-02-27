@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const stripe = require('../util/connect').stripeConnect;
 const PDFDocument = require('pdfkit');
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 4;
 
 
 exports.getIndex=(req,res,next)=>{
@@ -17,7 +17,6 @@ exports.getIndex=(req,res,next)=>{
   .then(numProducts=>{
     totalItems = numProducts;
     return Product.find()
-    .skip((page-1)*ITEMS_PER_PAGE)
     .limit(ITEMS_PER_PAGE)
   })
   .then(products=>{
@@ -25,14 +24,6 @@ exports.getIndex=(req,res,next)=>{
       prods: products,
       pageTitle: 'Shop',
       path: '/',
-      totalItems,
-      hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-      currentPage:page,
-      previousPage:page-1,
-      hasPreviousPage: page > 1,
-      nextPage : page + 1,
-      hasPreviousPage: page - 1,
-      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
     });
   })
   .catch(
@@ -77,7 +68,6 @@ exports.getProductDetail=(req,res,next)=>{
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
-      console.log(product)
       res.render('shop/product-detail', {
         product,
         pageTitle: product.title,
@@ -93,11 +83,10 @@ exports.getCart = (req, res, next)=>{
   .populate('cart.items.productId')
   .execPopulate()
   .then(user=>{
-    console.log(user.cart.items)
     res.render('shop/cart', {
       products:user.cart.items,
       pageTitle: 'Cart',
-      path: '/products',
+      path: '/cart',
     });
   })
 }
@@ -125,7 +114,6 @@ exports.getOrders = (req, res, next)=>{
   Order
   .find({'user.userId': req.user._id})
   .then(orders=>{
-    console.log(orders)
     res.render('shop/orders', {
       orders,
       pageTitle: 'Orders',

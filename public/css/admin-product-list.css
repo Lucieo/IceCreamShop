@@ -36,7 +36,7 @@
 }
 
 .add-product__wrapper{
-    padding-top:30px;
+    padding-bottom:30px;
 }
 
 .admin-products__actions{
@@ -53,4 +53,10 @@
 
 .admin-products__price{
     width: 10%;
+}
+
+.admin-denied{
+    text-align: center;
+    max-width: 500px;
+    margin:0 auto;
 }

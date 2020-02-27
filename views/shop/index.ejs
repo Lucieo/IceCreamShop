@@ -1,40 +1,54 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-
+    <div class="index__hero">
+        <h2>Enjoy nature's goodness!</h2>
+    </div>
     <main>
-        <div class="main-product">
-
-        </div>
+        <h2 class="centered">Our Beautiful Products</h2>
         <% if (prods.length > 0) { %>
-            <div class="grid">
+            <div class="grid products-display">
                 <% for (let product of prods) { %>
-                    <article class="card product-item">
-                        <header class="card__header">
-                            <h1 class="product__title"><%= product.title %></h1>
-                        </header>
-                        <div class="card__image">
-                            <div 
-                            style="background-image:url('<%= product.imageUrl %>')"
-                            class="card__imageBg">
-                        </div>
-                        <div class="card__content">
-                            <h2 class="product__price">$<%= product.price %></h2>
-                            <p class="product__description"><%= product.description %></p>
-                        </div>
-                        <div class='card__actions'>
-                            <a href="/products/<%= product._id %>" class='btn'>Details</a>
-                            <%- include('../includes/quick-add-to-cart.ejs', {product:product}) %>
-                        </div>
-                    </article>
+                    <div class='product-item__wrapper'>
+                        <article class="card product-item">
+                            <div class="card__image">
+                                <div 
+                                style="background-image:url('<%= product.imageUrl %>')"
+                                class="card__imageBg">
+                            </div>
+                            <div class="card__content">
+                                <h1 class="product__title"><%= product.title %></h1>
+                                <h2 class="product__price">$<%= product.price %></h2>
+                            </div>
+                            <div class='card__actions'>
+                                <a href="/products/<%= product._id %>" class='btn'>Details</a>
+                                <%- include('../includes/quick-add-to-cart.ejs', {product:product}) %>
+                            </div>
+                        </article>
+                    </div>
                 <% } %>
             </div>
-            <%- include('../includes/pagination.ejs', {currentPage, nextPage, previousPage, lastPage, hasNextPage, hasPreviousPage}) %>
+            <div class="centered products-display__see-more">
+                <a href="/products">
+                    <button class="btn">
+                        Want to see more?
+                    </button>
+                </a>
+            </div>
         <% } else { %>
-            <h1>No Products Found!</h1>
+            <h1>Sorry our shop is empty!</h1>
         <% } %>
     </main>
+
+    <div class="recipe-main">
+        <div class="recipe-main__text">
+            <h3><img src="/images/heart.png" alt="heart"> Good things are simple to make!</h3>
+            <p>At TICS we pay a special attention to our recipes and follow these simple steps to ensure a good natural ice-cream with incomparable flavor. Because we believe that simple things are the best things. </p>
+        </div>
+        <div class="recipe-main__picture"></div>
+    </div>
 <%- include('../includes/end.ejs') %>

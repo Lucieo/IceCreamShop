@@ -5,8 +5,8 @@ const fileHelper = require('../util/file');
 const {validationResult} = require('express-validator/check')
 
 exports.getAdminProducts = (req, res, next) => {
-  Product.find({userId: req.user._id})
-  //.populate('userId')
+  Product
+  .find({userId: req.user._id})
   .then(products=>{
     res.render('admin/products', {
       prods: products,
@@ -39,17 +39,16 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const image = req.files.image[0];
-  const productImage = req.files.productImage[0];
+  const imageUrl = req.files.image? req.files.image[0].path : undefined;
+  const productImageUrl = req.files.productImage ? req.files.productImage[0].path : undefined;
   const description = req.body.description;
   const price = req.body.price;
   const userId = req.user;//mongoose will look for id only
   const container = req.body.container;
   const ingredients = req.body.ingredients;
   const errors = validationResult(req);
-
-  const imageUrl = image.path;
-  const productImageUrl = productImage.path;
+  const validated=((req.user && req.user.superAdmin)? true : false);
+  const productInfo = {title, price, description, imageUrl, productImageUrl, userId, container, ingredients,validated}
 
   if(!errors.isEmpty()){
     return res
@@ -59,18 +58,12 @@ exports.postAddProduct = (req, res, next) => {
       path: '/admin/add-product',
       editing:false,
       hasError:true,
-      product: {
-        title,
-        price,
-        description,
-        container,
-        ingredients
-      },
+      product: productInfo,
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
     });
   }
-    if(!image){
+    if(!imageUrl || !productImageUrl){
     return res
     .status(422)
     .render('admin/edit-product', {
@@ -78,23 +71,17 @@ exports.postAddProduct = (req, res, next) => {
       path: '/admin/edit-product',
       editing:false,
       hasError:true,
-      product: {
-        title,
-        imageUrl, 
-        price,
-        description,
-        container,
-        ingredients
-      },
-      errorMessage: "Attached file is not an image (jpeg jpg or png accepted).",
+      product: productInfo,
+      errorMessage: "Image files are requires - Only jpeg jpg or png",
       validationErrors: []
     });
   }
 
-  const product = new Product({title, price, description, imageUrl, productImageUrl, userId, container, ingredients, });
+  const product = new Product(productInfo);
   product
   .save()
-  .then(result=>res.redirect('/admin/products'))
+  .then(result=>{
+    return res.redirect('/admin/products')})
   .catch(err=>{
     const error = new Error(err);
     error.httpStatusCode = 500;
@@ -117,7 +104,7 @@ exports.getEditProduct = (req, res, next) => {
       pageTitle: 'Edit Product',
       path: '/admin/edit-product',
       editing:editMode,
-      product: product,
+      product,
       hasError: false,
       errorMessage: null,
       validationErrors: []
@@ -137,14 +124,8 @@ exports.postEditProduct = (req, res, next)=>{
   const updatedDescription = req.body.description;
   const updatedContainer = req.body.container;
   const updatedIngredients = req.body.ingredients;
-  let updatedImage=undefined;
-  let updatedProductImage=undefined;
-  if(req.files.image){
-    updatedImage = req.files.image[0];
-  }
-  if(req.files.productImage){
-    updatedProductImage = req.files.productImage[0];
-  }
+  let updatedImageUrl=req.files.image? req.files.image[0].path : undefined;
+  let updatedProductImageUrl=req.files.productImage ? req.files.productImage[0].path  : undefined;
 
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -177,18 +158,17 @@ exports.postEditProduct = (req, res, next)=>{
     }
     product.title = updatedTitle;
     product.price = updatedPrice;
-    if(updatedImage){
+    if(updatedImageUrl){
       fileHelper.deleteFile(product.imageUrl);
       product.imageUrl = updatedImage.path;
     }
-    if(updatedProductImage){
+    if(updatedProductImageUrl){
       fileHelper.deleteFile(product.productImageUrl);
       product.productImageUrl =updatedProductImage.path;
     }
     product.description = updatedDescription;
     product.container = updatedContainer;
     product.ingredients = updatedIngredients;
-    console.log(product)
     return product.save()  
     .then(result=>  res.redirect('/admin/products'));
   })

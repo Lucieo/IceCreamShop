@@ -17,6 +17,10 @@ const userSchema = new Schema({
         type: Boolean,
         default:false
     },
+    superAdmin:{
+        type: Boolean,
+        default:false
+    },
     cart: {
         items: [
             {

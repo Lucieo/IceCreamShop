@@ -27,3 +27,9 @@
       border: 1px solid #00695c;
       color: #00695c;
   }
+
+  .orders__no-orders{
+    max-width: 150px;
+    padding: 10px;
+    margin-top: 25px;
+  }

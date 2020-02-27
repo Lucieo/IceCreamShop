@@ -20,11 +20,10 @@
                 <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
-                </a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
+                <%if(!isAdmin){%>
+                    <img src="/images/lock.png" alt="lock" style="max-width: 18px;">
+                <%}%>
+                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin
                 </a>
             </li>
             <%}%>
@@ -51,17 +50,22 @@
 </header>
 
 <nav class="mobile-nav">
-    <div class="mobile-nav__logo-wrapper">
-        <img src="/images/logo-color.png" alt="" class="main-header__logo">
-        <p class="mobile-nav__logo-text">The Ice Cream Shop</p>
-    </div>
+    <% if(isLoggedIn){%>
+        <p>Welcome <%= userEmail %></p>
+    <%}%>
     <ul class="mobile-nav__item-list">
-        <li class="mobile-nav__item">
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+        <li>
+            <a href="/">
+                <div class="mobile-nav__logo-wrapper">
+                    <img src="/images/logo-color.png" alt="" class="main-header__logo">
+                    <p class="mobile-nav__logo-text">The Ice Cream Shop</p>
+                </div>
+            </a>
         </li>
         <li class="mobile-nav__item">
             <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
         </li>
+        <% if(isLoggedIn){%>
         <li class="mobile-nav__item">
             <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
         </li>
@@ -69,13 +73,13 @@
             <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
         </li>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
+            <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin
+                <%if(!isAdmin){%>
+                    <img src="/images/lock.png" alt="lock" style="max-width: 18px;">
+                <%}%>
             </a>
         </li>
-        <li class="mobile-nav__item">
-            <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
-            </a>
-        </li>
+        <% }%>
     </ul>
     <ul class="mobile-nav__item-list">
         <% if(isLoggedIn){ %>

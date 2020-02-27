@@ -32,3 +32,16 @@
     background-position: center;
 }
 
+.index__hero{
+    background-size: cover;
+    background-image: url(/images/shop.jpg);
+    min-height: 60vh;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 20px;
+}
+

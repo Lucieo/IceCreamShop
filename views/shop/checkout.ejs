@@ -1,10 +1,16 @@
 <%- include('../includes/head.ejs') %>
 <link rel="stylesheet" href="/css/cart.css">
+<link rel="stylesheet" href="/css/checkout.css">
 </head>
 
 <body>
     <%- include('../includes/navigation.ejs') %>
 <main>
+    <div class="centered">
+        <h2>Delicious order nearly on it's way!</h2>
+        <p>Hurry up and order before it begings to melt!</p>
+        <img src="/images/ice-cream-truck.png" alt="ice cream truck" class="checkout__icon">
+    </div>
     <ul class="cart__item-list">
         <% products.forEach(p => {%>
             <li class="cart__item"> 

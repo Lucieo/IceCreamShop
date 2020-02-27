@@ -68,6 +68,7 @@
 .product-detail__ingredients{
     margin: 0 auto;
     padding: 20px;
+    max-width: 400px;
 }
 
 .product-detail__ingredient-icon{

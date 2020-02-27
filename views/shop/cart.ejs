@@ -5,13 +5,14 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
 <main>
-    <h2>CART PAGE</h2>
     <% if(products.length>0){%>
+        <h2 class="centered">Your Cart</h2>
         <ul class="cart__item-list">
             <% products.forEach(p => {%>
                 <li class="cart__item"> 
                     <h1><%= p.productId.title %></h1>
-                    <h2>Quantity : <%= p.quantity%></h2>
+                    <p>quantity: <%= p.quantity%></p>
+                    <p>price: <%= p.quantity*p.productId.price%>$</p>
                         <form action="/cart-delete-item" method="POST">
                             <input type="hidden" value="<%= p.productId._id %>" name="productId">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -22,14 +23,19 @@
             <% })%>
         </ul>
         <div class='centered'>
-            <!-- <form action="/create-order" method='POST'>
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button class='btn'>Order Now!</button>
-            </form> -->
             <a class="btn" href="/checkout">Order Now!</a>
         </div>
     <%}else{%>
-
+        <div class="centered">
+            <h2 class="centered">Can't believe your cart is empty!</h2>
+            <p>I'm sure we can find somethings you'd like in our shop.</p>
+            <img src="/images/milkshake.png" alt="milkshake">
+            <div class="centered">
+                <a href="/products">
+                    <button class="btn">Let's find somehting to eat</button>
+                </a>
+            </div>
+        </div>
     <%}%>
 </main>
 <%- include('../includes/end.ejs') %>

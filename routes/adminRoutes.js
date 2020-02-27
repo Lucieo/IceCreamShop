@@ -3,26 +3,28 @@ const path = require('path');
 const express = require('express');
 
 const adminController = require('../controllers/adminController');
-const isAuth = require('../middleware/is-auth');
-const {check, body} = require('express-validator/check');
+const isAdmin = require('../middleware/is-admin');
+const hasReachedLimit = require('../middleware/has-reached-limit');
+const {body} = require('express-validator');
 
 const router = express.Router();
 
-router.get('/add-product', isAuth, adminController.getAddProduct);
+router.get('/add-product', isAdmin, hasReachedLimit, adminController.getAddProduct);
 router.post('/add-product', [
     body('title', 'Title must be at least 3 characters long and no special characters allowed.')
         .isString()
         .isLength({min: 3})
         .trim(),
-    body('imageUrl', 'Please provide a valid url for product image.')
-        .trim(),
     body('price', 'Price must be a float.')
         .isNumeric(),
     body('description', 'Product description must be at least 5 characters long maximum 400.')
         .isLength({min: 5, max:400})
+        .trim(),
+    body('ingredients', 'Ingredients must be at least 5 characters long maximum 400.')
+        .isLength({min: 5, max:400})
         .trim()
-] ,adminController.postAddProduct);
-router.get('/products', adminController.getAdminProducts)
+], isAdmin, hasReachedLimit, adminController.postAddProduct);
+router.get('/products', isAdmin, adminController.getAdminProducts)
 
 router.get('/edit-product/:productId', adminController.getEditProduct);
 router.post('/edit-product', [
@@ -35,8 +37,8 @@ router.post('/edit-product', [
     body('description', 'Product description must be at least 5 characters long maximum 400.')
         .isLength({min: 5, max:400})
         .trim()
-], adminController.postEditProduct);
+],isAdmin, adminController.postEditProduct);
 
-router.delete('/product/:productId', isAuth, adminController.deleteProduct);
+router.delete('/product/:productId', isAdmin, adminController.deleteProduct);
 
 module.exports = router;

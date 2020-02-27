@@ -6,7 +6,18 @@
         <%- include('../includes/navigation.ejs') %>
         <main>
             <% if (orders.length <= 0) { %>
-                <h1>Nothing there!</h1>
+                <div class='centered'>
+                    <h2>What a shame!</h2>
+                    <p>It seems you haven't had the chance to order anything yet...</p>
+                    <div class="centered">
+                        <a href="/products">
+                            <button class="btn">Let's fix this!</button>
+                        </a>
+                    </div>
+                    <div class="centered">
+                        <img src="/images/jar.png" alt="jar" class="orders__no-orders">
+                    </div>
+                </div>
             <% } else { %>
                 <ul class="orders">
                     <% orders.forEach(order => { %>
