@@ -1,3 +1,4 @@
 node_modules
 .vscode
-util/connect.js
+nodemon.json
+package.json

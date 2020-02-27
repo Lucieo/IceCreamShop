@@ -1,0 +1,2 @@
+::1 - - [27/Feb/2020:18:06:33 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
+::1 - - [27/Feb/2020:18:06:34 +0000] "GET /favicon.ico HTTP/1.1" 404 - "https://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
